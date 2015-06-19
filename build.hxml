@@ -1,0 +1,9 @@
+-cp src
+-D doc-gen
+--macro include('react')
+--no-output
+--each
+
+--next
+-xml output/js.xml
+-js dummy.js
