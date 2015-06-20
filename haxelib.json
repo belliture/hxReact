@@ -4,7 +4,7 @@
   "license": "MIT",
   "tags": ["js", "web", "react"],
   "description": "Haxe extern for React",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "classPath": "src",
   "releasenote": "Extern for React ver.0.13.3",
   "contributors": ["belliture"],
