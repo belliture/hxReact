@@ -21,7 +21,7 @@ extern class React {
     @:native("Children")
     public static var children:ReactChildrenUtility;
 
-    public static function createClass(spec:ReactComponentSpec):ReactClass;
+    public static function createClass(spec:{ render: Void -> ReactElement }):ReactClass;
 
     public static function createElement(reactClassOrTagName:EitherType<ReactClass, String>, ?props:Dynamic, ?children:Dynamic):ReactElement;
 
@@ -77,48 +77,6 @@ extern class ReactComponent
     public function setProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
 
     public function replaceProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
-}
-
-/**
-    この型の構造体は`React.createClass`の引数になります。
-**/
-typedef ReactComponentSpec = {
-    function render():ReactElement;
-
-    /** type: Void -> object **/
-    @:optional function getInitialState():Dynamic;
-
-    /** type: Void -> object **/
-    @:optional function getDefaultProps():Dynamic;
-
-    /** type: object **/
-    @:optional var propTypes: Dynamic<PropType>;
-
-    /** type: array **/
-    @:optional var mixins: Array<Dynamic>;
-
-    /** type: object **/
-    @:optional var statics: Dynamic;
-
-    @:optional var displayName: String;
-
-    @:optional function componentWillMounto():Void;
-
-    @:optional function componentDidMount():Void;
-
-    /** type: object nextProps -> Void **/
-    @:optional function componentWillReceiveProps(nextState:Dynamic):Void;
-
-    /** type: object nextProps -> object nextState -> Void **/
-    @:optional function shouldComponentUpdate(nextProps:Dynamic, nextState:Dynamic):Bool;
-
-    /** type: object nextProps -> object nextState -> Void **/
-    @:optional function componentWillUpdate(nextProps:Dynamic, nextState:Dynamic):Void;
-
-    /** type: object prevProps -> object prevState -> Void **/
-    @:optional function componentDidUpdate(prevProps:Dynamic, prevState:Dynamic):Void;
-
-    @:optional function componentWillUnmount():Void;
 }
 
 /**
