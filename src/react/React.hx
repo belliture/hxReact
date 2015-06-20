@@ -130,10 +130,10 @@ extern class ReactChildren {}
     `React.children`から呼び出して使用して下さい。
 **/
 extern class ReactChildrenUtility {
-    public static function map(children:ReactChildren, func:Dynamic, ?context:ReactComponent):ReactChildren;
-    public static function forEach(children:ReactChildren, func:Dynamic, ?context:ReactComponent):Void;
-    public static function count(children:ReactChildren):Int;
-    public static function only(children:ReactChildren):Dynamic;
+    public function map(children:ReactChildren, func:Dynamic, ?context:ReactComponent):ReactChildren;
+    public function forEach(children:ReactChildren, func:Dynamic, ?context:ReactComponent):Void;
+    public function count(children:ReactChildren):Int;
+    public function only(children:ReactChildren):Dynamic;
 }
 
 /**
@@ -141,41 +141,41 @@ extern class ReactChildrenUtility {
 **/
 extern class PropTypes {
     /** A JS primitive **/
-    public static var array:PropType;
+    public var array:PropType;
     /** A JS primitive **/
-    public static var bool:PropType;
+    public var bool:PropType;
     /** A JS primitive **/
-    public static var func:PropType;
+    public var func:PropType;
     /** A JS primitive **/
-    public static var number:PropType;
+    public var number:PropType;
     /** A JS primitive **/
-    public static var object:PropType;
+    public var object:PropType;
     /** A JS primitive **/
-    public static var string:PropType;
+    public var string:PropType;
 
     /** Anything that can be rendered: numbers, strings, elements or an array containing these types. **/
-    public static var node:PropType;
+    public var node:PropType;
 
     /** A React element **/
-    public static var element:PropType;
+    public var element:PropType;
 
-    public static var any:PropType;
+    public var any:PropType;
 
-    public static function instanceOf(classType:Dynamic):PropType;
+    public function instanceOf(classType:Dynamic):PropType;
 
-    public static function oneOf(any:Array<Dynamic>):PropType;
+    public function oneOf(any:Array<Dynamic>):PropType;
 
-    public static function oneOfType(any:Array<PropType>):PropType;
+    public function oneOfType(any:Array<PropType>):PropType;
 
-    public static function arrayOf(propType:PropType):PropType;
+    public function arrayOf(propType:PropType):PropType;
 
-    public static function objectOf(propType:PropType):PropType;
+    public function objectOf(propType:PropType):PropType;
 
-    public static function shape(object:Dynamic<PropType>):PropType;
+    public function shape(object:Dynamic<PropType>):PropType;
 }
 
 extern class PropType {
-    public static var isRequired:Dynamic;
+    public var isRequired:Dynamic;
 }
 
 /**
