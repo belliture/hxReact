@@ -64,6 +64,8 @@ extern class ReactComponent
     @:native("props.children")
     public var children(default,null):ReactChildren;
 
+    public var childContextTypes(default,null):Dynamic<PropType>;
+
     public function setState(nextStateOrUpdater:Dynamic, ?callback:Void -> Void):Void;
 
     public function replaceState(nextState:Dynamic, ?callback:Void -> Void):Void;
@@ -77,6 +79,8 @@ extern class ReactComponent
     public function setProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
 
     public function replaceProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
+
+    public function getChildContext():Dynamic;
 }
 
 /**
