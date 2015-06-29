@@ -23,14 +23,16 @@ extern class React {
 
     public static function createClass(spec:{ render: Void -> ReactElement }):ReactClass;
 
-    public static function createElement(reactClassOrTagName:EitherType<ReactClass, String>, ?props:Dynamic, ?children:Dynamic):ReactElement;
+    @:overload(function(baseComponent:Class<Dynamic>, ?props:Dynamic, ?children:Dynamic):ReactElement {})
+    @:overload(function(tagName:String, ?props:Dynamic, ?children:Dynamic):ReactElement {})
+    public static function createElement(reactClass:ReactClass, ?props:Dynamic, ?children:Dynamic):ReactElement;
 
     public static function cloneElement(element:ReactElement, ?props:Dynamic, ?children:Dynamic):ReactElement;
 
     // FactoryFunctionの用意を考えておく
     public static function createFactory(reactClassOrTagName:EitherType<ReactClass, String>):Dynamic;
 
-    public static function render(element:ReactElement, container:DOMElement, ?callback:Void -> Void):ReactComponent;
+    public static function render(element:ReactElement, container:DOMElement, ?callback:Void -> Void):Dynamic;
 
     public static function unmountComponentAtNode(container:DOMElement):Bool;
 
@@ -40,7 +42,7 @@ extern class React {
 
     public static function isValidElement(object:Dynamic):Bool;
 
-    public static function findDOMNode(component:ReactComponent):DOMElement;
+    public static function findDOMNode(component:IReactComponent):DOMElement;
 
     public static function initializeTouchEvents(shouldUseTouch:Bool):Void;
 }
@@ -52,23 +54,25 @@ extern class ReactElement {}
 /**
     使用する際は `refs` / `props` / `state` から取得する値を適切な型を持たせた変数に入れる等して下さい。
 **/
-extern class ReactComponent
+@:jsRequire("react", "Component")
+extern class ReactComponent<Props, State> implements IReactComponent
 {
     public var refs(default,null):Dynamic;
 
-    public var props(default,null):Dynamic;
+    public var props(default,null):Props;
 
-    public var state(default,null):Dynamic;
+    public var state(default,null):State;
 
     /** `props.children`へのエイリアス **/
     @:native("props.children")
     public var children(default,null):ReactChildren;
 
-    public var childContextTypes(default,null):Dynamic<PropType>;
+    public function new(props:Props, context:Dynamic);
 
-    public function setState(nextStateOrUpdater:Dynamic, ?callback:Void -> Void):Void;
+    @:overload(function(updater:State -> Props -> State, ?callback:Void -> Void):Void {})
+    public function setState(nextState:State, ?callback:Void -> Void):Void;
 
-    public function replaceState(nextState:Dynamic, ?callback:Void -> Void):Void;
+    public function replaceState(nextState:State, ?callback:Void -> Void):Void;
 
     public function forceUpdate(?callback:Void -> Void):Void;
 
@@ -76,12 +80,12 @@ extern class ReactComponent
 
     public function isMounted():Bool;
 
-    public function setProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
+    public function setProps(nextProps:Props, ?callback:Void -> Void):Void;
 
-    public function replaceProps(nextProps:Dynamic, ?callback:Void -> Void):Void;
-
-    public function getChildContext():Dynamic;
+    public function replaceProps(nextProps:Props, ?callback:Void -> Void):Void;
 }
+
+extern interface IReactComponent {}
 
 /**
     中身を型でどう表現するか思いつかないので、ブラックボックスとしています。
@@ -92,8 +96,8 @@ extern class ReactChildren {}
     `React.children`から呼び出して使用して下さい。
 **/
 extern class ReactChildrenUtility {
-    public function map(children:ReactChildren, func:Dynamic, ?context:ReactComponent):ReactChildren;
-    public function forEach(children:ReactChildren, func:Dynamic, ?context:ReactComponent):Void;
+    public function map(children:ReactChildren, func:Dynamic, ?context:IReactComponent):ReactChildren;
+    public function forEach(children:ReactChildren, func:Dynamic, ?context:IReactComponent):Void;
     public function count(children:ReactChildren):Int;
     public function only(children:ReactChildren):Dynamic;
 }
